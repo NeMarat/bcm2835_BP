@@ -543,6 +543,19 @@ void bcm2835_delayMicroseconds(uint64_t micros)
 	}
 }
 
+// This function is added in order to simulate arduino millis() function
+unsigned int bcm2835_millis(void)
+{
+struct timeval now;
+unsigned long long ms;
+
+gettimeofday(&now, NULL);
+
+ms = (now.tv_sec * 1000000 + now.tv_usec) / 1000 ;
+
+return ((uint32_t) (ms - epoch ));
+}
+
 //
 // Higher level convenience functions
 //
