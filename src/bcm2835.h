@@ -1177,6 +1177,11 @@ extern "C" {
     /// \param[in] micros Delay in microseconds
     extern void bcm2835_delayMicroseconds (uint64_t micros);
 
+    /// Indicate the number of milliseconds since startup of PI
+    /// This function is like the Arduino millis function
+    /// \return Number of milliseconds
+    extern unsigned int bcm2835_millis(void);
+
     /// Sets the output state of the specified pin
     /// \param[in] pin GPIO number, or one of RPI_GPIO_P1_* from \ref RPiGPIOPin.
     /// \param[in] on HIGH sets the output to HIGH and LOW to LOW.
