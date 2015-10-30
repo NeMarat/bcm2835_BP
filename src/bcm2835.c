@@ -103,6 +103,9 @@ static uint32_t pwm_period;
 static int i2c_fd = -1;
 static int spi_fd = -1;
 
+// Time for millis()
+static unsigned long long epoch ;
+
 /*end 2015.01.05*/
 
 //
@@ -1104,6 +1107,7 @@ int bcm2835_init(void)
 	uint32_t mmap_base;
 	uint32_t mmap_seek;
 	volatile uint32_t *sunxi_tmp;
+	struct timeval tv;
 	
 	if (1 != get_cpuinfo_revision()) 
 	{
@@ -1164,12 +1168,15 @@ int bcm2835_init(void)
 
 	ok = 1;
 	
-	exit:
-	    if (memfd >= 0)
-	        close(memfd);
+    exit:
+	if (memfd >= 0)
+	    close(memfd);
 
-    if (!ok)
-	bcm2835_close();
+        if (!ok)
+	   bcm2835_close();
+
+	gettimeofday (&tv, NULL) ;
+	epoch = (tv.tv_sec * 1000000 + tv.tv_usec) / 1000 ;
 
     return ok;
 }
